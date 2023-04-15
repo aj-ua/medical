@@ -1,0 +1,30 @@
+// colors
+$white: #ffffff;
+$black: #000000;
+$c-header: #8d81ac;
+$c-features-text: #848e97;
+$bg-features: #f4f4f4;
+$c-subtitle: #323232;
+$c-title-rev: #635c73;
+$c-text-fdbacks: #a291a5;
+$c-fdbacks-line: #645766;
+$bg-pricing: #4a3b4e;
+
+// Fonts -------------------------------------------
+$font-text: "Lato", sans-serif;
+$font-heading: "Montserratg", sans-serif;
+
+// Transitions -------------------------------------------
+$time: 0.3s;
+
+// Grid breakpoints -------------------------------------------
+// for min-width = values, for max-width = value - 1px.
+// example: @include min(lg) = @media (min-width: 993px)
+// example: @include max(lg) = @media (max-width: 992px)
+$grid-breakpoints: (
+  xs: 0,
+  sm: 480px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);

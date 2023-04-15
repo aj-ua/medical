@@ -1,0 +1,27 @@
+@mixin flexRowCenter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  @mixin flexColumCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @mixin burgerLine {
+    width: 100%;
+    height: 3px;
+    border-radius: 5px;
+    background-color: $white;
+  }
+  @mixin btnHeader {
+    background-color: $c-header;
+    border-radius: 40px;
+    border: none;
+    color: $white;
+    font-family: $font-heading;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+  

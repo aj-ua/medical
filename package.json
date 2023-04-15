@@ -1,0 +1,51 @@
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "description": "Starter theme for web development",
+  "license": "GPL-2.0",
+  "repository": {
+    "type": "git"
+  },
+  "scripts": {
+    "preinstall": "npx npm-force-resolutions",
+    "start": "gulp",
+    "build": "gulp build",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@popperjs/core": "^2.11.6",
+    "autoprefixer": "^9.8.5",
+    "babel-loader": "^8.2.5",
+    "bootstrap": "^5.2.0",
+    "browser-sync": "^2.26.10",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-if": "^3.0.0",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-rimraf": "^1.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sass-glob": "^1.0.9",
+    "gulp-size": "^3.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "plugin-error": "^2.0.0",
+    "sass": "^1.54.9",
+    "webpack": "^5.74.0",
+    "webpack-stream": "^7.0.0"
+  },
+  "resolutions": {
+    "glob-parent": "^6.0.1"
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "not dead"
+  ]
+}
