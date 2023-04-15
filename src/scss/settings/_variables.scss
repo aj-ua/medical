@@ -1,14 +1,7 @@
 // colors
-$white: #ffffff;
-$black: #000000;
-$c-header: #8d81ac;
-$c-features-text: #848e97;
-$bg-features: #f4f4f4;
-$c-subtitle: #323232;
-$c-title-rev: #635c73;
-$c-text-fdbacks: #a291a5;
-$c-fdbacks-line: #645766;
-$bg-pricing: #4a3b4e;
+$w: #ffffff;
+$b: #000000;
+
 
 // Fonts -------------------------------------------
 $font-text: "Lato", sans-serif;
@@ -23,7 +16,7 @@ $time: 0.3s;
 // example: @include max(lg) = @media (max-width: 992px)
 $grid-breakpoints: (
   xs: 0,
-  sm: 480px,
+  sm: 576px,
   md: 768px,
   lg: 992px,
   xl: 1200px,

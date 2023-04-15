@@ -9,16 +9,8 @@ html {
 }
 
 body {
-  min-width: 320px;
-  background-color: $white;
-  color: $black;
-  font-family: $font-text;
+  min-width: 360px;
+  background-color: $w;
+  color: $b;
   line-height: 1.5;
 }
-.container {
-  max-width: 1220px;
-  margin: 0 auto;
-  padding: 0 10px;
-  width: 100%;
-}
-

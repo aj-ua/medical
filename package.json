@@ -9,8 +9,8 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "start": "gulp",
-    "build": "gulp build",
-    "dev": "gulp watch"
+    "watch": "gulp watch",
+    "build": "gulp build"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",

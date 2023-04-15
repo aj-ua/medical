@@ -7,7 +7,7 @@ const
         nm: 'node_modules/',
         theme: '.',
         src: 'src/',
-        build: 'dist/'
+        build: 'dist/',
     },
     url = 'http://starter.local',
 
@@ -147,7 +147,7 @@ function cleanDest() {
 
 const jsConfig = {
 
-    srcMain: dir.src + '/js/main.js',
+    srcMain: dir.src + '/js/app.js',
     srcCopy: [dir.src + 'js/copy/*.js'],
     watch: dir.src + 'js/**/*',
     build: dir.build + 'js/'
@@ -171,7 +171,7 @@ function js() {
         .pipe(webpackStream({
             mode: isProd ? 'production' : 'development',
             output: {
-                filename: 'main.js',
+                filename: 'app.js',
             },
             module: {
                 rules: [{
@@ -222,7 +222,7 @@ const syncConfig = {
 // browser-sync
 function bs() {
 
-    return  browsersync.init({
+    return browsersync.init({
         server: {
             baseDir: "./"
         }
@@ -251,13 +251,17 @@ function watchfonts() {
     gulp.watch(fontsConfig.watch, fonts);
 }
 
+function watchHtml() {
+    gulp.watch("*.html").on('change', browsersync.reload);
+}
+
 const toProd = (done) => {
     isProd = true;
     done();
 };
 
 const start = gulp.parallel(fonts, images, css, js, jsCopy, watchcss, watchjs, watchjsCopy, watchfonts, watchimages);
-const watch = gulp.parallel(fonts, images, css, js, jsCopy, bs, watchcss, watchjs, watchjsCopy, watchfonts, watchimages);
+const watch = gulp.parallel(fonts, images, css, js, jsCopy, bs, watchcss, watchjs, watchjsCopy, watchfonts, watchimages, watchHtml);
 const build = gulp.series(toProd, cleanDest, gulp.parallel(fonts, images, css, js, jsCopy));
 
 exports.css = css;
