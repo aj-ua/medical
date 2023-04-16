@@ -1,3 +1,5 @@
+import Card from "./Card";
+
 export default class LocalStorage {
 	constructor(token) {
 		this.token = ''
@@ -83,9 +85,23 @@ export default class LocalStorage {
 			if (this.token.length) {
 				console.log('this.token', this.token)
 				const response = this.getCards(this.token)
-				response.then(json => console.log('json', json))
+				response.then(json => {
+					console.log('json', json)
+					if (json !== null) {
+						document.querySelector('.cards__nothing').remove()
+						json.forEach(el => {
+							const cardsValues = Object.values(el);
+							const [doctor, ...rest] = cardsValues;
+							console.log(doctor);
 
-				const cardsEl = document.querySelector('#cards')
+							const card = new Card(...cardsValues)
+							card.renderContent()
+						})
+					} else {
+						document.querySelector('#cards').insertAdjacentHTML('beforeend', '<h3 class="cards__nothing">No visits have been added.</h3>')
+					}
+				})
+
 			} else {
 				console.log('NO this.token')
 			}
