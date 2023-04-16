@@ -1,4 +1,5 @@
 import Card from "./Card";
+import {userLogIn, userLogOut} from './functions'
 
 export default class LocalStorage {
 	constructor(token) {
@@ -87,8 +88,11 @@ export default class LocalStorage {
 				const response = this.getCards(this.token)
 				response.then(json => {
 					console.log('json', json)
-					if (json !== null) {
-						document.querySelector('.cards__nothing').remove()
+					if (json !== null && json.length) {
+						if (document.querySelector('.cards__nothing')) {
+							document.querySelector('.cards__nothing').remove()
+						}
+
 						json.forEach(el => {
 							const cardsValues = Object.values(el);
 							const [doctor, ...rest] = cardsValues;
@@ -98,9 +102,13 @@ export default class LocalStorage {
 							card.renderContent()
 						})
 					} else {
-						document.querySelector('#cards').insertAdjacentHTML('beforeend', '<h3 class="cards__nothing">No visits have been added.</h3>')
+						if (!document.querySelector('.cards__nothing')) {
+							document.querySelector('#cards').insertAdjacentHTML('beforeend', '<h3 class="cards__nothing">No visits have been added.</h3>')
+						}
 					}
 				})
+
+				userLogIn()
 
 			} else {
 				console.log('NO this.token')

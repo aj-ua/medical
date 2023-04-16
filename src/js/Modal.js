@@ -1,4 +1,5 @@
 import LocalStorage from "./LocalStorage";
+import {userLogIn} from "./functions";
 
 const storage = new LocalStorage()
 
@@ -102,9 +103,7 @@ class ModalLogin extends Modal {
 
 			}
 
-			document.querySelector('.js-login').classList.add('is-logged-in')
-			document.querySelector('.js-login span').textContent = 'Log out'
-			document.querySelector('.js-add-visit').classList.remove('d-none')
+			userLogIn()
 			this.closeModal()
 		})
 	}
