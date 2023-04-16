@@ -1,3 +1,9 @@
+import LocalStorage from "./LocalStorage";
+
+const storage = new LocalStorage()
+
+console.log('token from storage', storage.token)
+
 export default class Modal {
 	constructor() {
 		this.renderContent()
@@ -85,72 +91,22 @@ class ModalLogin extends Modal {
 			if (localStorage.getItem('medicalToken') !== null) {
 
 				const token = localStorage.getItem('medicalToken')
-				this.renderCards(token)
+				storage.renderCards()
 
 			} else {
 
-				this.fetchToken(email, password).then(token => {
+				storage.getToken(email, password).then(token => {
 					localStorage.setItem('medicalToken', token)
-					this.renderCards(token)
+					storage.renderCards()
 				})
 
 			}
 
-			// document.querySelector(".header__btn-login").classList.add("header__btn--hidden")
-			// document.querySelector(".header__btn-create-card").classList.remove("header__btn--hidden")
+			document.querySelector('.js-login').classList.add('is-logged-in')
+			document.querySelector('.js-login span').textContent = 'Log out'
+			document.querySelector('.js-add-visit').classList.remove('d-none')
 			this.closeModal()
 		})
-	}
-
-	async getToken() {
-
-	}
-
-	async fetchToken(email, password) {
-		const response = await fetch('https://ajax.test-danit.com/api/v2/cards/login', {
-			method: 'POST',
-			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({email: email, password: password}),
-			format: 'json'
-		})
-		const data = await response.text()
-		return data;
-	}
-
-	// Get cards from localStorage or server
-	async getCards(token) {
-		let data;
-		if (localStorage.getItem('medicalCards') !== null) {
-			data = JSON.parse(localStorage.getItem('medicalCards'))
-		} else {
-			data = this.fetchCards(token)
-		}
-		return data
-	}
-
-	async fetchCards(token) {
-		let response = await fetch("https://ajax.test-danit.com/api/v2/cards", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-		});
-
-		const data = await response.json()
-
-		if (data !== "") {
-			localStorage.setItem('medicalCards', JSON.stringify(data))
-		}
-
-		return data
-	}
-
-	async renderCards(token) {
-		const response = this.getCards(token)
-		response.then(json => console.log('json', json))
-
-		const cardsEl = document.querySelector('#cards')
 	}
 
 }
