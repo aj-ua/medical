@@ -36,6 +36,9 @@ export default class Modal {
 	}
 }
 
+/**
+ * Modal: User Login
+ */
 class ModalLogin extends Modal {
 	constructor() {
 		super();
@@ -76,8 +79,31 @@ class ModalLogin extends Modal {
 		this.form.addEventListener('submit', e => {
 			e.preventDefault()
 			console.log('form submit')
-			const token = this.fetchToken(this.form.email.value, this.form.password.value).then(data => console.log(data))
+			const email = this.form.email.value,
+				password = this.form.password.value
+
+			if (localStorage.getItem('medicalToken') !== null) {
+
+				const token = localStorage.getItem('medicalToken')
+				this.renderCards(token)
+
+			} else {
+
+				this.fetchToken(email, password).then(token => {
+					localStorage.setItem('medicalToken', token)
+					this.renderCards(token)
+				})
+
+			}
+
+			// document.querySelector(".header__btn-login").classList.add("header__btn--hidden")
+			// document.querySelector(".header__btn-create-card").classList.remove("header__btn--hidden")
+			this.closeModal()
 		})
+	}
+
+	async getToken() {
+
 	}
 
 	async fetchToken(email, password) {
@@ -87,8 +113,44 @@ class ModalLogin extends Modal {
 			body: JSON.stringify({email: email, password: password}),
 			format: 'json'
 		})
-		const data = await response.text();
+		const data = await response.text()
 		return data;
+	}
+
+	// Get cards from localStorage or server
+	async getCards(token) {
+		let data;
+		if (localStorage.getItem('medicalCards') !== null) {
+			data = JSON.parse(localStorage.getItem('medicalCards'))
+		} else {
+			data = this.fetchCards(token)
+		}
+		return data
+	}
+
+	async fetchCards(token) {
+		let response = await fetch("https://ajax.test-danit.com/api/v2/cards", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		const data = await response.json()
+
+		if (data !== "") {
+			localStorage.setItem('medicalCards', JSON.stringify(data))
+		}
+
+		return data
+	}
+
+	async renderCards(token) {
+		const response = this.getCards(token)
+		response.then(json => console.log('json', json))
+
+		const cardsEl = document.querySelector('#cards')
 	}
 
 }
