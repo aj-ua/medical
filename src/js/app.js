@@ -1,4 +1,4 @@
-import {Modal, ModalLogin} from './Modal.js'
+import {ModalLogin, ModalVisit} from './Modal.js'
 import LocalStorage from "./LocalStorage";
 import Card from './Card.js'
 import {userLogIn, userLogOut} from './functions'
@@ -17,6 +17,10 @@ document.querySelector('.js-login').addEventListener('click', function(e)  {
 		e.preventDefault()
 		userLogOut()
 	} else {
-		const modalLogin = new ModalLogin()
+		const modalLogin = new ModalLogin('User Login')
 	}
+})
+
+document.querySelector('.js-add-visit').addEventListener('click', function(e)  {
+	const modalLogin = new ModalVisit('Add Visit')
 })

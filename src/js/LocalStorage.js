@@ -10,10 +10,7 @@ export default class LocalStorage {
 
 	init() {
 		if (localStorage.getItem('medicalToken') !== null) {
-
-			console.log('storage init')
 			this.token = localStorage.getItem('medicalToken')
-
 		}
 	}
 
@@ -99,7 +96,7 @@ export default class LocalStorage {
 							console.log(doctor);
 
 							const card = new Card(...cardsValues)
-							card.renderContent()
+							card.render()
 						})
 					} else {
 						if (!document.querySelector('.cards__nothing')) {

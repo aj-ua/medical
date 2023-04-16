@@ -9,7 +9,7 @@ export default class Card {
 		this.id = id
 	}
 
-	renderContent() {
+	render() {
 		const html = `
 		<div class="card" data-id="${this.id}">
 			<div class="card-header">
