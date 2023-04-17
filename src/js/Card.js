@@ -88,11 +88,11 @@ export class CardiologistCard extends Card {
 		super.render()
 		const cardContent = `
 		<div class="card-text__hidden">
-			<p>Доктор: <strong>${this.doctor}</strong></p>
-			<p>Вік: <strong>${this.age}</strong></p>
-			<p>Тиск: <strong>${this.bloodPressure}</strong></p>
-			<p>Індекс тіла: <strong>${this.bodyMassIndex}</strong></p>
-			<p>Серцеві захворювання: <strong>${this.cardiovascularDisease}</strong></p>
+			<p>Doctor: <strong>${this.doctor}</strong></p>
+			<p>Age: <strong>${this.age}</strong></p>
+			<p>Pressure: <strong>${this.bloodPressure}</strong></p>
+			<p>Body index: <strong>${this.bodyMassIndex}</strong></p>
+			<p>Heart deceases: <strong>${this.cardiovascularDisease}</strong></p>
 		</div>
   		`
 		super.renderText(cardContent, true)
@@ -111,8 +111,8 @@ export class DentistCard extends Card {
 		super.render()
 		let cardContent = `
 		<div class="card-text__hidden">
-			<p>Доктор: <strong>${this.doctor}</strong></p>
-			<p>Дата візиту: <strong>${this.visitDate}</strong></p>
+			<p>Doctor: <strong>${this.doctor}</strong></p>
+			<p>Last date: <strong>${this.visitDate}</strong></p>
 		</div>
     `
 		super.renderText(cardContent, true)
@@ -131,12 +131,9 @@ export class TherapistCard extends Card {
 		super.render()
 		let cardContent = `
 		<div class="card-text__hidden">
-			<p>Доктор: <strong>${this.doctor}</strong></p>
-			<p>Вік: <strong>${this.age}</strong></p>
+			<p>Doctor: <strong>${this.doctor}</strong></p>
+			<p>Age: <strong>${this.age}</strong></p>
 		</div>
-          <p class="board-of-cards__patient-card__property-name">Доктор:</p>
-          <p class="board-of-cards__patient-card__property-name">${this.doctor}</p>
-          <p class="board-of-cards__patient-card__property-name">Вік:</p>
       `
 		super.renderText(cardContent, true)
 	}

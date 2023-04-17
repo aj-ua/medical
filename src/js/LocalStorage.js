@@ -48,11 +48,9 @@ export default class LocalStorage {
 	async getCards(token = '') {
 		let data = [];
 		if (localStorage.getItem('medicalCards') !== null && JSON.stringify(localStorage.getItem('medicalCards')) === "{}") {
-			console.log('not null')
 			data = JSON.parse(localStorage.getItem('medicalCards'))
 			this.cards = data
 		} else if (token.length) {
-			console.log('is null')
 			data = this.fetchCards(token)
 			this.cards = data
 		}
@@ -93,24 +91,19 @@ export default class LocalStorage {
 						}
 
 						json.forEach(el => {
-							console.log('el', el)
 							const cardsValues = Object.values(el);
 							const [doctor, ...rest] = cardsValues;
-							console.log(doctor);
 
 							let objDoctor;
 							switch (doctor) {
 								case "cardiologist":
 									objDoctor = new CardiologistCard(...cardsValues);
-
 									break;
 								case "dentist":
 									objDoctor = new DentistCard(...cardsValues);
-
 									break;
 								case "therapist":
 									objDoctor = new TherapistCard(...cardsValues);
-
 									break;
 								default:
 									console.log("wrong doctor type");

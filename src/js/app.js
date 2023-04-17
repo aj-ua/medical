@@ -5,13 +5,8 @@ import {userLogIn, userLogOut} from './functions'
 import Login from "./Login";
 import Visit from "./Visit";
 
-async function app() {
-	console.log('app init')
-	const storage = new LocalStorage()
-	storage.renderCards()
-}
-
-app();
+const storage = new LocalStorage()
+storage.renderCards()
 
 
 document.querySelector('.js-login').addEventListener('click', function(e)  {

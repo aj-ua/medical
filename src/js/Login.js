@@ -2,7 +2,6 @@ import {userLogIn} from "./functions";
 import LocalStorage from "./LocalStorage";
 
 const storage = new LocalStorage()
-console.log('token from storage', storage.token)
 
 export default class Login {
 	constructor(modal) {

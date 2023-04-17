@@ -63,22 +63,22 @@ export default class Visit {
 	renderDefaultInputs() {
 		const html = `
             <div class="mb-3">
-				<label for="fullName" class="form-label">ПІБ</label>
+				<label for="fullName" class="form-label">Name</label>
 				<input class="form-control" type="text" id="fullName" name="fullName" value="${this.fullName}">
 			</div>
 			
 			<div class="mb-3">
-				<label for="visitType" class="form-label">Мета візиту</label>
+				<label for="visitType" class="form-label">Purpose</label>
 				<input class="form-control" type="text" id="visitType" name="visitType" value="${this.visitType}">
 			</div>
 			
 			<div class="mb-3">
-				<label for="visitDescription" class="form-label">Короткий опис візиту</label>
+				<label for="visitDescription" class="form-label">Description</label>
 				<input class="form-control" type="text" id="visitDescription" name="visitDescription">${this.visitDescription}</input>
 			</div>
 			
 			<div class="mb-3">
-				<label for="visitUrgency" class="form-label">Терміновість</label>
+				<label for="visitUrgency" class="form-label">Urgency</label>
 				<select class="form-select" id="visitUrgency" name="visitUrgency">
 					<option value="normal" ${this.visitUrgency === 'normal' ? 'selected' : ''}>Звичайна</option>
 					<option value="priority" ${this.visitUrgency === 'priority' ? 'selected' : ''}>Пріоритетна</option>
@@ -130,23 +130,23 @@ class VisitCardiologist extends Visit {
 	render() {
 		const html = `
             <div class="mb-3">
-				<label for="bloodPressure" class="form-label">Тиск</label>
+				<label for="bloodPressure" class="form-label">Pressure</label>
 				<input class="form-control" type="text" id="bloodPressure" name="bloodPressure" value="${this.bloodPressure}">
 			</div>
 			
 			<div class="mb-3">
-				<label for="bodyMassIndex" class="form-label">Індекс маси тіла</label>
+				<label for="bodyMassIndex" class="form-label">Body index</label>
 				<input class="form-control" type="text" id="bodyMassIndex" name="bodyMassIndex" value="${this.bodyMassIndex}">
 			</div>
 			
 			
 			<div class="mb-3">
-				<label for="cardiovascularDisease" class="form-label">Перенесені захворювання серцево-судинної системи</label>
+				<label for="cardiovascularDisease" class="form-label">Past heart deceases</label>
 				<input class="form-control" type="text" id="cardiovascularDisease" name="cardiovascularDisease" value="${this.cardiovascularDisease}">
 			</div>
 			
 			<div class="mb-3">
-				<label for="age" class="form-label">Вік</label>
+				<label for="age" class="form-label">Age</label>
 				<input class="form-control" type="text" id="age" name="age" value="${this.age}">
 			</div>
     	`
@@ -165,7 +165,7 @@ class VisitDentist extends Visit {
 	render() {
 		const html = `
             <div class="mb-3">
-				<label for="visitDate" class="form-label">Остання дата прийому</label>
+				<label for="visitDate" class="form-label">Last visit date</label>
 				<input class="form-control" type="date" id="visitDate" name="visitDate" value="${this.visitDate}">
 			</div>
         `
@@ -183,7 +183,7 @@ class VisitTherapist extends Visit {
 	render() {
 		const html = `
             <div class="mb-3">
-				<label for="age" class="form-label">Вік</label>
+				<label for="age" class="form-label">Age</label>
 				<input class="form-control" type="text" id="age" name="age" value="${this.age}">
 			</div>
         `
