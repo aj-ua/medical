@@ -25,13 +25,23 @@ export default class Visit {
 		<div class="mb-3">
 			<select class="form-select" id="doctor" name="doctor">
 				<option value="" disabled selected>Select a doctor</option>          
-				<option value="cardiologist">Cardiologist</option>
-				<option value="dentist">Dentist</option>
-				<option value="therapist">Therapist</option>
+				<option value="cardiologist" ${this.doctor === 'cardiologist' ? 'selected' : ''}>Cardiologist</option>
+				<option value="dentist" ${this.doctor === 'dentist' ? 'selected' : ''}>Dentist</option>
+				<option value="therapist" ${this.doctor === 'therapist' ? 'selected' : ''}>Therapist</option>
 			</select>
 		</div>
+		<div class="visit-inputs"></div>
 		`
 		this.modal.renderFormInputs(html)
+	}
+
+	renderInputs(html, append = false) {
+		const visitInputs = document.querySelector('.visit-inputs')
+		if (append) {
+			visitInputs.insertAdjacentHTML('beforeend', html)
+		} else {
+			visitInputs.innerHTML = html
+		}
 	}
 
 	handleDoctorSelect() {
@@ -64,7 +74,7 @@ export default class Visit {
 			
 			<div class="mb-3">
 				<label for="visitDescription" class="form-label">Короткий опис візиту</label>
-				<textarea class="form-control" id="visitDescription" name="visitDescription">${this.visitDescription}</textarea>
+				<input class="form-control" type="text" id="visitDescription" name="visitDescription">${this.visitDescription}</input>
 			</div>
 			
 			<div class="mb-3">
@@ -76,20 +86,19 @@ export default class Visit {
 				</select>
 			</div>
         `
-		this.modal.renderFormInputs(html)
-	}
-
-	removeInputs() {
-		this.inputs = document.querySelectorAll('[data-input]')
-		this.inputs.forEach(input => input.remove())
-		this.inputs = []
+		this.renderInputs(html)
 	}
 
 	handleFormSubmit() {
-		const form = document.querySelector('.form-add-visit')
+		const form = document.querySelector('.form-add-visit'),
+			submitBtn = form.querySelector('button[type="submit"]')
 		console.log('add visit submit')
 		this.form.addEventListener('submit', e => {
 			e.preventDefault()
+			submitBtn.classList.add('disabled')
+
+			const formData = new FormData(form);
+			console.log(Object.fromEntries(formData));
 
 			fetch("https://ajax.test-danit.com/api/v2/cards", {
 				method: 'POST',
@@ -97,17 +106,14 @@ export default class Visit {
 					'Content-Type': 'application/json',
 					'Authorization': `Bearer ${token}`
 				},
-				body: JSON.stringify({
-					title: 'Визит к кардиологу',
-					description: 'Плановый визит',
-					doctor: 'Cardiologist',
-					bp: '24',
-					age: 23,
-					weight: 70
-				})
+				body: JSON.stringify(Object.fromEntries(formData))
 			})
 				.then(response => response.json())
-				.then(response => console.log(response))
+				.then(response => {
+					console.log(response)
+					this.modal.closeModal()
+					alert("Added visit")
+				})
 		})
 	}
 }
@@ -144,7 +150,8 @@ class VisitCardiologist extends Visit {
 				<input class="form-control" type="text" id="age" name="age" value="${this.age}">
 			</div>
     	`
-		this.modal.renderFormInputs(html, true)
+
+		super.renderInputs(html, true)
 	}
 }
 
@@ -162,7 +169,7 @@ class VisitDentist extends Visit {
 				<input class="form-control" type="date" id="visitDate" name="visitDate" value="${this.visitDate}">
 			</div>
         `
-		this.modal.renderFormInputs(html, true)
+		super.renderInputs(html, true)
 	}
 
 }
@@ -180,7 +187,7 @@ class VisitTherapist extends Visit {
 				<input class="form-control" type="text" id="age" name="age" value="${this.age}">
 			</div>
         `
-		this.modal.renderFormInputs(html, true)
+		super.renderInputs(html, true)
 	}
 }
 

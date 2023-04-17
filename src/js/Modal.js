@@ -52,6 +52,12 @@ export default class Modal {
 		this.closeButton.addEventListener('click', e => {
 			this.closeModal()
 		})
+		this.modal.addEventListener('click', e => {
+			e.stopPropagation()
+			if (e.target.classList.contains('modal')) {
+				this.closeModal()
+			}
+		})
 	}
 }
 
