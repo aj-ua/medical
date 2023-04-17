@@ -14,6 +14,22 @@ export default class Visit {
 		this.visitUrgency = ''
 	}
 
+	renderDoctorSelect() {
+		this.modalBody.innerHTML = `
+		<form class="form-add-visit">
+			<div class="mb-3">
+				<select class="form-select" id="doctor" name="doctor">
+					<option value="" disabled selected>Select a doctor</option>          
+					<option value="cardiologist">Cardiologist</option>
+					<option value="dentist">Dentist</option>
+					<option value="therapist">Therapist</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		`
+	}
+
 	doctorSelectListener() {
 		this.select.addEventListener('change', () => {
 			const selectedDoctor = this.select.value
