@@ -9,3 +9,4 @@ export function userLogOut() {
 	document.querySelector('.js-login span').textContent = 'Login'
 	document.querySelector('.js-add-visit').classList.add('d-none')
 }
+export const token = localStorage.getItem('medicalToken')

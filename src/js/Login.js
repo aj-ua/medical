@@ -13,23 +13,20 @@ export default class Login {
 
 	render() {
 		const html = `
-		<form class="form-login">
-			<div class="mb-3">
-				<label for="email" class="form-label">Email*</label>
-				<input type="email" class="form-control" id="email" required>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password*</label>
-				<input type="password" class="form-control" id="password" required>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+		<div class="mb-3">
+			<label for="email" class="form-label">Email*</label>
+			<input type="email" class="form-control" id="email" required>
+		</div>
+		<div class="mb-3">
+			<label for="password" class="form-label">Password*</label>
+			<input type="password" class="form-control" id="password" required>
+		</div>
 		`
-		this.modal.renderBody(html)
+		this.modal.renderFormInputs(html)
 	}
 
 	handleFormSubmit() {
-		const form = document.querySelector('.form-login')
+		const form = document.querySelector('.modal form')
 		form.addEventListener('submit', e => {
 			e.preventDefault()
 			const email = form.email.value,

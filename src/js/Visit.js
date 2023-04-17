@@ -1,3 +1,5 @@
+import {token} from './functions'
+
 export default class Visit {
 	constructor(modal) {
 		this.modal = modal
@@ -12,61 +14,101 @@ export default class Visit {
 		this.visitType = ''
 		this.visitDescription = ''
 		this.visitUrgency = ''
+
+		this.render()
+		this.form = document.querySelector('.modal form')
+		this.handleDoctorSelect()
 	}
 
-	renderDoctorSelect() {
-		this.modalBody.innerHTML = `
-		<form class="form-add-visit">
-			<div class="mb-3">
-				<select class="form-select" id="doctor" name="doctor">
-					<option value="" disabled selected>Select a doctor</option>          
-					<option value="cardiologist">Cardiologist</option>
-					<option value="dentist">Dentist</option>
-					<option value="therapist">Therapist</option>
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+	render() {
+		const html = `
+		<div class="mb-3">
+			<select class="form-select" id="doctor" name="doctor">
+				<option value="" disabled selected>Select a doctor</option>          
+				<option value="cardiologist">Cardiologist</option>
+				<option value="dentist">Dentist</option>
+				<option value="therapist">Therapist</option>
+			</select>
+		</div>
 		`
+		this.modal.renderFormInputs(html)
 	}
 
-	doctorSelectListener() {
-		this.select.addEventListener('change', () => {
-			const selectedDoctor = this.select.value
-			this.removeInputs()
+	handleDoctorSelect() {
+		console.log('this.form', this.form)
+		this.form.querySelector('#doctor').addEventListener('change', (e) => {
+			const selectedDoctor = e.target.value
+			console.log('selectedDoctor', doctor)
+
 			const VisitConstructor = this.doctors[selectedDoctor]
 			const visitCardInputs = new VisitConstructor(this.modal)
 			this.renderDefaultInputs()
 			visitCardInputs.render()
 		})
+
+		this.handleFormSubmit()
 	}
 
 
 	renderDefaultInputs() {
 		const html = `
-            <label for="fullName" data-input>ПІБ</label>
-            <input class="modal__fullname" type="text" id="fullName" name="fullName" value="${this.fullName}" data-input>
-
-            <label for="visitType" data-input>Мета візиту</label>
-            <input class="modal__visitType" type="text" id="visitType" name="visitType" value="${this.visitType}" data-input>
-
-            <label for="visitDescription" data-input>Короткий опис візиту</label>
-            <textarea class="modal__visitDescription" id="visitDescription" name="visitDescription" data-input>${this.visitDescription}</textarea>
-
-            <label for="visitUrgency" data-input>Терміновість</label>
-            <select class="modal__visitUrgency" id="visitUrgency" name="visitUrgency" data-input>
-                <option value="normal" ${this.visitUrgency === 'normal' ? 'selected' : ''}>Звичайна</option>
-                <option value="priority" ${this.visitUrgency === 'priority' ? 'selected' : ''}>Пріоритетна</option>
-                <option value="urgent" ${this.visitUrgency === 'urgent' ? 'selected' : ''}>Невідкладна</option>
-             </select>
+            <div class="mb-3">
+				<label for="fullName" class="form-label">ПІБ</label>
+				<input class="form-control" type="text" id="fullName" name="fullName" value="${this.fullName}">
+			</div>
+			
+			<div class="mb-3">
+				<label for="visitType" class="form-label">Мета візиту</label>
+				<input class="form-control" type="text" id="visitType" name="visitType" value="${this.visitType}">
+			</div>
+			
+			<div class="mb-3">
+				<label for="visitDescription" class="form-label">Короткий опис візиту</label>
+				<textarea class="form-control" id="visitDescription" name="visitDescription">${this.visitDescription}</textarea>
+			</div>
+			
+			<div class="mb-3">
+				<label for="visitUrgency" class="form-label">Терміновість</label>
+				<select class="form-select" id="visitUrgency" name="visitUrgency">
+					<option value="normal" ${this.visitUrgency === 'normal' ? 'selected' : ''}>Звичайна</option>
+					<option value="priority" ${this.visitUrgency === 'priority' ? 'selected' : ''}>Пріоритетна</option>
+					<option value="urgent" ${this.visitUrgency === 'urgent' ? 'selected' : ''}>Невідкладна</option>
+				</select>
+			</div>
         `
-		this.modal.setInputs(html)
+		this.modal.renderFormInputs(html)
 	}
 
 	removeInputs() {
 		this.inputs = document.querySelectorAll('[data-input]')
 		this.inputs.forEach(input => input.remove())
 		this.inputs = []
+	}
+
+	handleFormSubmit() {
+		const form = document.querySelector('.form-add-visit')
+		console.log('add visit submit')
+		this.form.addEventListener('submit', e => {
+			e.preventDefault()
+
+			fetch("https://ajax.test-danit.com/api/v2/cards", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`
+				},
+				body: JSON.stringify({
+					title: 'Визит к кардиологу',
+					description: 'Плановый визит',
+					doctor: 'Cardiologist',
+					bp: '24',
+					age: 23,
+					weight: 70
+				})
+			})
+				.then(response => response.json())
+				.then(response => console.log(response))
+		})
 	}
 }
 
@@ -78,18 +120,31 @@ class VisitCardiologist extends Visit {
 		this.cardiovascularDisease = ''
 		this.age = ''
 	}
+
 	render() {
 		const html = `
-            <label for="bloodPressure" data-input>Тиск</label>
-            <input class="modal__class=bloodPressure" type="text" id="bloodPressure" name="bloodPressure" value="${this.bloodPressure}" data-input>
-            <label for="bodyMassIndex" data-input>Індекс маси тіла</label>
-            <input class="modal__bodyMassIndex" type="text" id="bodyMassIndex" name="bodyMassIndex" value="${this.bodyMassIndex}" data-input>
-            <label for="cardiovascularDisease" data-input>Перенесені захворювання серцево-судинної системи</label>
-            <input class="modal__cardiovascularDisease" type="text" id="cardiovascularDisease" name="cardiovascularDisease" value="${this.cardiovascularDisease}" data-input>
-            <label for="age" data-input>Вік</label>
-            <input class="modal__age" type="text" id="age" name="age" value="${this.age}" data-input>
-    `
-		this.modal.setInputs(html)
+            <div class="mb-3">
+				<label for="bloodPressure" class="form-label">Тиск</label>
+				<input class="form-control" type="text" id="bloodPressure" name="bloodPressure" value="${this.bloodPressure}">
+			</div>
+			
+			<div class="mb-3">
+				<label for="bodyMassIndex" class="form-label">Індекс маси тіла</label>
+				<input class="form-control" type="text" id="bodyMassIndex" name="bodyMassIndex" value="${this.bodyMassIndex}">
+			</div>
+			
+			
+			<div class="mb-3">
+				<label for="cardiovascularDisease" class="form-label">Перенесені захворювання серцево-судинної системи</label>
+				<input class="form-control" type="text" id="cardiovascularDisease" name="cardiovascularDisease" value="${this.cardiovascularDisease}">
+			</div>
+			
+			<div class="mb-3">
+				<label for="age" class="form-label">Вік</label>
+				<input class="form-control" type="text" id="age" name="age" value="${this.age}">
+			</div>
+    	`
+		this.modal.renderFormInputs(html, true)
 	}
 }
 
@@ -102,10 +157,12 @@ class VisitDentist extends Visit {
 
 	render() {
 		const html = `
-            <label for="visitDate" data-input>Остання дата прийому</label>
-            <input class="modal__visitDate" type="date" id="visitDate" name="visitDate" value="${this.visitDate}" data-input>
+            <div class="mb-3">
+				<label for="visitDate" class="form-label">Остання дата прийому</label>
+				<input class="form-control" type="date" id="visitDate" name="visitDate" value="${this.visitDate}">
+			</div>
         `
-		this.modal.setInputs(html)
+		this.modal.renderFormInputs(html, true)
 	}
 
 }
@@ -118,10 +175,13 @@ class VisitTherapist extends Visit {
 
 	render() {
 		const html = `
-            <label for="age" data-input>Вік</label>
-            <input class="modal__age" type="text" id="age" name="age" value="${this.age}" data-input>
+            <div class="mb-3">
+				<label for="age" class="form-label">Вік</label>
+				<input class="form-control" type="text" id="age" name="age" value="${this.age}">
+			</div>
         `
-		this.modal.setInputs(html)
+		this.modal.renderFormInputs(html, true)
 	}
 }
-export {Visit,VisitCardiologist,VisitDentist,VisitTherapist}
+
+export {Visit, VisitCardiologist, VisitDentist, VisitTherapist}

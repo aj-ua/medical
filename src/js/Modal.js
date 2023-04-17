@@ -2,7 +2,6 @@ export default class Modal {
 	constructor(title) {
 		this.render(title)
 		this.modal = document.querySelector('.modal')
-		this.modalBody = this.modal.querySelector('.modal-body')
 		this.closeButton = this.modal.querySelector('.btn-close')
 		this.handleCloseModal()
 	}
@@ -17,7 +16,12 @@ export default class Modal {
 						<button type="button" class="btn-close"></button>
 					</div>
 					<div class="modal-body">
-					...
+						<form class="form-add-visit">
+							<div class="form-inputs">
+								...
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -26,12 +30,18 @@ export default class Modal {
 		document.body.insertAdjacentHTML('beforeend', html)
 	}
 
-	renderTitle(html) {
-		this.modalBody.innerHTML = html
+	renderBody(html) {
+		const modalBody = this.modal.querySelector('.modal-body')
+		modalBody.innerHTML = html
 	}
 
-	renderBody(html) {
-		this.modalBody.innerHTML = html
+	renderFormInputs(html, append = false) {
+		const formInputs = this.modal.querySelector('.form-inputs')
+		if (append) {
+			formInputs.insertAdjacentHTML('beforeend', html)
+		} else {
+			formInputs.innerHTML = html
+		}
 	}
 
 	closeModal() {
@@ -45,42 +55,3 @@ export default class Modal {
 	}
 }
 
-
-/**
- * Modal: New Visit
- */
-class ModalVisit extends Modal {
-	constructor(title) {
-		super(title);
-		this.renderBody()
-		this.doctorSelect = this.modal.querySelector('#doctor')
-		this.form = this.modal.querySelector('.modal form')
-		this.handleDoctorSelect()
-		this.handleFormSubmit()
-	}
-
-
-	handleDoctorSelect() {
-		this.form.addEventListener('submit', e => {
-			e.preventDefault()
-			console.log('form submit')
-			const doctor = this.form.doctor.value
-
-			if (doctor !== '') {
-
-			}
-		})
-	}
-
-	handleFormSubmit() {
-		this.doctorSelect.addEventListener('change', e => {
-			const doctor = e.target.value
-			console.log('doctor', doctor)
-
-		})
-	}
-
-}
-
-
-export {Modal, ModalVisit}
