@@ -1,6 +1,10 @@
 .card {
 	width: 320px;
 
+	@include min(lg) {
+		width: calc(33.3% - 1rem);
+	}
+
 	&-header {
 		.btn {
 			float: right;

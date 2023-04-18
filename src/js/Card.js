@@ -25,7 +25,7 @@ export default class Card {
 					<p>Description: <strong>${this.visitDescription}</strong></p>
 				</div>
 				<div class="d-flex align-items-center justify-content-between gap-2 mt-4">
-					<a href="#" class="card-link js-toggle mr-auto">Show details <i class="fa-solid fa-chevron-down"></i></a>
+					<a href="#" class="card-link js-card-toggle mr-auto">Show details <i class="fa-solid fa-chevron-down"></i></a>
 					<div>
 						<button type="button" class="btn btn-outline-danger js-delete"><i class="fa-solid fa-trash"></i></button>
 						<button type="button" class="btn btn-outline-dark js-edit"><i class="fa-solid fa-edit"></i></button>
@@ -35,11 +35,13 @@ export default class Card {
 		</div>`
 
 		this.cardsEl.insertAdjacentHTML('beforeend', html)
+		this.card = document.querySelector(`.card[data-id="${this.id}"]`)
 		this.handleDelete()
+		this.toggleHiddenText()
 	}
 
 	renderText(html, append = false) {
-		const cardText = document.querySelector(`.card[data-id="${this.id}"] .card-text`)
+		const cardText = this.card.querySelector('.card-text')
 		if (append) {
 			cardText.insertAdjacentHTML('beforeend', html)
 		} else {
@@ -48,27 +50,36 @@ export default class Card {
 	}
 
 	handleDelete() {
-		this.cardsEl.querySelectorAll('.js-delete').forEach(el => {
-			el.addEventListener("click", e => {
-				e.preventDefault()
-				console.log('delete')
-				const card = e.target.closest('.card'),
-					cardId = card.dataset.id
+		this.card.querySelector('.js-delete').addEventListener("click", e => {
+			e.preventDefault()
+			console.log('delete')
+			const card = e.target.closest('.card'),
+				cardId = card.dataset.id
 
-				if (confirm("Remove this item?")) {
-					fetch(`https://ajax.test-danit.com/api/v2/cards/${cardId}`, {
-						method: 'DELETE',
-						headers: {
-							'Authorization': `Bearer ${token}`
-						},
+			if (confirm("Remove this item?")) {
+				fetch(`https://ajax.test-danit.com/api/v2/cards/${cardId}`, {
+					method: 'DELETE',
+					headers: {
+						'Authorization': `Bearer ${token}`
+					},
+				})
+					.then(response => {
+						if (response.status == 200) {
+							card.remove()
+						}
 					})
-						.then(response => {
-							if (response.status == 200) {
-								card.remove()
-							}
-						})
-				}
-			})
+			}
+		})
+	}
+
+	toggleHiddenText() {
+		this.card.querySelector('.js-card-toggle').addEventListener('click', e => {
+			e.preventDefault()
+			console.log('click')
+			const cardTextHidden = this.card.querySelector('.card-text__hidden')
+			if (cardTextHidden) {
+				cardTextHidden.classList.toggle('d-none')
+			}
 		})
 	}
 }
@@ -87,7 +98,7 @@ export class CardiologistCard extends Card {
 	render() {
 		super.render()
 		const cardContent = `
-		<div class="card-text__hidden">
+		<div class="card-text__hidden d-none">
 			<p>Doctor: <strong>${this.doctor}</strong></p>
 			<p>Age: <strong>${this.age}</strong></p>
 			<p>Pressure: <strong>${this.bloodPressure}</strong></p>
@@ -110,7 +121,7 @@ export class DentistCard extends Card {
 	render() {
 		super.render()
 		let cardContent = `
-		<div class="card-text__hidden">
+		<div class="card-text__hidden d-none">
 			<p>Doctor: <strong>${this.doctor}</strong></p>
 			<p>Last date: <strong>${this.visitDate}</strong></p>
 		</div>
@@ -130,7 +141,7 @@ export class TherapistCard extends Card {
 	renderingCard() {
 		super.render()
 		let cardContent = `
-		<div class="card-text__hidden">
+		<div class="card-text__hidden d-none">
 			<p>Doctor: <strong>${this.doctor}</strong></p>
 			<p>Age: <strong>${this.age}</strong></p>
 		</div>
