@@ -1,6 +1,6 @@
 import {token} from './functions'
 
-export default class Visit {
+class Visit {
 	constructor(modal) {
 		this.modal = modal
 		this.doctors = {
@@ -59,7 +59,6 @@ export default class Visit {
 		this.handleFormSubmit()
 	}
 
-
 	renderDefaultInputs() {
 		const html = `
             <div class="mb-3">
@@ -115,6 +114,12 @@ export default class Visit {
 					alert("Added visit")
 				})
 		})
+	}
+
+	renderEdit(modal, obj) {
+		const VisitConstructor = this.doctors[obj.doctor]
+		const visitCardInputs = new VisitConstructor(modal)
+		this.renderDefaultInputs()
 	}
 }
 

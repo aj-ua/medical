@@ -10,3 +10,5 @@ export function userLogOut() {
 	document.querySelector('.js-add-visit').classList.add('d-none')
 }
 export const token = localStorage.getItem('medicalToken')
+
+export const cards = JSON.parse(localStorage.getItem('medicalCards'))

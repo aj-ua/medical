@@ -121,7 +121,7 @@ export default class LocalStorage {
 				userLogIn()
 
 			} else {
-				console.log('NO this.token')
+				console.log('NO token')
 			}
 		}
 

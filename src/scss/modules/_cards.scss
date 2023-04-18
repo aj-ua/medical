@@ -19,5 +19,12 @@
 			margin-bottom: 5px;
 		}
 	}
+}
 
+.js-toggle {
+	&.is-open {
+		i {
+			transform: rotate(180deg);
+		}
+	}
 }

@@ -1,4 +1,6 @@
-import {token} from './functions'
+import {token, cards} from './functions'
+import Modal from './Modal'
+import {Visit, VisitCardiologist, VisitDentist, VisitTherapist} from './Visit'
 
 export default class Card {
 	constructor(fullName, visitType, visitDescription, visitUrgency, id) {
@@ -25,7 +27,7 @@ export default class Card {
 					<p>Description: <strong>${this.visitDescription}</strong></p>
 				</div>
 				<div class="d-flex align-items-center justify-content-between gap-2 mt-4">
-					<a href="#" class="card-link js-card-toggle mr-auto">Show details <i class="fa-solid fa-chevron-down"></i></a>
+					<a href="#" class="card-link js-toggle mr-auto"><span>Show details</span> <i class="fa-solid fa-chevron-down"></i></a>
 					<div>
 						<button type="button" class="btn btn-outline-danger js-delete"><i class="fa-solid fa-trash"></i></button>
 						<button type="button" class="btn btn-outline-dark js-edit"><i class="fa-solid fa-edit"></i></button>
@@ -38,6 +40,7 @@ export default class Card {
 		this.card = document.querySelector(`.card[data-id="${this.id}"]`)
 		this.handleDelete()
 		this.toggleHiddenText()
+		this.handleEdit()
 	}
 
 	renderText(html, append = false) {
@@ -73,13 +76,42 @@ export default class Card {
 	}
 
 	toggleHiddenText() {
-		this.card.querySelector('.js-card-toggle').addEventListener('click', e => {
+		const toggleBtn = this.card.querySelector('.js-toggle')
+		toggleBtn.addEventListener('click', e => {
 			e.preventDefault()
-			console.log('click')
 			const cardTextHidden = this.card.querySelector('.card-text__hidden')
-			if (cardTextHidden) {
-				cardTextHidden.classList.toggle('d-none')
+			toggleBtn.classList.toggle('is-open')
+
+			if (toggleBtn.classList.contains('is-open')) {
+				cardTextHidden.classList.remove('d-none')
+				toggleBtn.querySelector('span').innerHTML = 'Hide details'
+			} else {
+				cardTextHidden.classList.add('d-none')
+				toggleBtn.querySelector('span').innerHTML = 'Show details'
 			}
+		})
+	}
+
+	handleEdit() {
+		const editBtn = this.card.querySelector('.js-edit'),
+			cardId = this.id
+
+		editBtn.addEventListener('click', e => {
+			e.preventDefault()
+			console.log('id', this.id)
+			let visitObj
+			if (cards.length > 0) {
+				visitObj = cards.filter(el => {
+					return el.id === cardId
+				})
+			}
+			if (visitObj[0].hasOwnProperty('id')) {
+				console.log('visitObj', visitObj)
+				const modalEdit = new Modal('Edit Visit')
+				const visitEdit = new Visit(modalEdit)
+				visitEdit.renderEdit(modalEdit, visitObj[0])
+			}
+
 		})
 	}
 }
