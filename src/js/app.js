@@ -22,4 +22,5 @@ document.querySelector('.js-login').addEventListener('click', function(e)  {
 document.querySelector('.js-add-visit').addEventListener('click', function(e)  {
 	const modalVisit = new Modal('Add Visit')
 	const addVisit = new Visit(modalVisit)
+	addVisit.render({})
 })
