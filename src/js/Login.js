@@ -1,7 +1,7 @@
 import {userLogIn} from "./functions";
-import LocalStorage from "./LocalStorage";
+import Storage from "./Storage";
 
-const storage = new LocalStorage()
+const storage = new Storage()
 
 export default class Login {
 	constructor(modal) {

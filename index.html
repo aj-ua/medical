@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./dist/css/style.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-light bg-light">
         <div class="container d-flex justify-content-between">
             <a class="navbar-brand text-primary d-inline-flex align-items-center gap-2" href="#">
@@ -28,6 +28,34 @@
 
     <main class="py-5" id="app">
         <div class="container">
+			<div id="message"></div>
+
+			<form class="bg-light d-none" id="filters">
+				<fieldset class="border d-flex gap-3 mb-4">
+					<div class="flex-grow-1">
+						<label for="status" class="form-label">Status</label>
+						<select class="form-select" id="status" name="status">
+							<option value="*" selected>All</option>
+							<option value="Open">Open</option>
+							<option value="Done">Done</option>
+						</select>
+					</div>
+					<div class="flex-grow-1">
+						<label for="urgency" class="form-label">Urgency</label>
+						<select class="form-select" id="urgency" name="urgency">
+							<option value="*" selected>All</option>
+							<option value="normal">Normal</option>
+							<option value="priority">Priority</option>
+							<option value="urgent">Urgent</option>
+						</select>
+					</div>
+					<div class="flex-grow-1">
+						<label for="search" class="form-label">Search</label>
+						<input class="form-control" type="search" id="search" name="search">
+					</div>
+				</fieldset>
+			</form>
+
             <div class="d-flex flex-wrap justify-content-center gap-4" id="cards">
                 <h3 class="cards__nothing">No visits have been added.</h3>
             </div>

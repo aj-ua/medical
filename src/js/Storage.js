@@ -1,7 +1,8 @@
-import {Card, CardiologistCard, DentistCard, TherapistCard} from "./Card";
 import {userLogIn, userLogOut} from './functions'
+import {Card, CardiologistCard, DentistCard, TherapistCard} from "./Card";
+import Message from "./Message"
 
-export default class LocalStorage {
+export default class Storage {
 	constructor(token) {
 		this.token = ''
 		this.cards = []
@@ -86,8 +87,10 @@ export default class LocalStorage {
 				response.then(json => {
 					console.log('json', json)
 					if (json !== null && json.length) {
+
 						if (document.querySelector('.cards__nothing')) {
 							document.querySelector('.cards__nothing').remove()
+							document.querySelector('#filters').classList.remove('d-none')
 						}
 
 						json.forEach(el => {
@@ -111,10 +114,16 @@ export default class LocalStorage {
 							}
 							objDoctor.render()
 						})
+
+						new Message(`${json.length} cards loaded`, 'success')
+
 					} else {
+
 						if (!document.querySelector('.cards__nothing')) {
 							document.querySelector('#cards').insertAdjacentHTML('beforeend', '<h3 class="cards__nothing">No visits have been added.</h3>')
+							document.querySelector('#filters').classList.add('d-none')
 						}
+
 					}
 				})
 

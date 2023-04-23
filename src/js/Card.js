@@ -1,6 +1,7 @@
 import {token, cards} from './functions'
 import Modal from './Modal'
 import {Visit, VisitCardiologist, VisitDentist, VisitTherapist} from './Visit'
+import Message from "./Message"
 
 export default class Card {
 	constructor(fullName, visitType, visitDescription, visitUrgency, id) {
@@ -15,7 +16,7 @@ export default class Card {
 
 	render() {
 		const html = `
-		<div class="card" data-id="${this.id}">
+		<div class="card" data-id="${this.id}" data-status="Open" data-urgency="${this.visitUrgency}">
 			<div class="card-header">
 				<h4 class="card-title">${this.fullName}</h4>
 				<span class="card-subtitle"><span class="text-muted">status: </span><strong>${this.status}</strong></span>
@@ -24,7 +25,7 @@ export default class Card {
 				<div class="card-text">
 					<p>Visit type: <strong>${this.visitType}</strong></p>
 					<p>Urgency: <strong>${this.visitUrgency}</strong></p>
-					<p>Description: <strong>${this.visitDescription}</strong></p>
+					<p>Description: <strong class="card-description">${this.visitDescription}</strong></p>
 				</div>
 				<div class="d-flex align-items-center justify-content-between gap-2 mt-4">
 					<a href="#" class="card-link js-toggle mr-auto"><span>Show details</span> <i class="fa-solid fa-chevron-down"></i></a>
@@ -69,6 +70,7 @@ export default class Card {
 					.then(response => {
 						if (response.status == 200) {
 							card.remove()
+							new Message('Removed card', 'danger')
 						}
 					})
 			}

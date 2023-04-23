@@ -1,13 +1,14 @@
 import Modal from './Modal.js'
-import LocalStorage from "./LocalStorage";
-import Card from './Card.js'
+import Storage from "./Storage";
 import {userLogIn, userLogOut} from './functions'
-import Login from "./Login";
-import Visit from "./Visit";
+import Login from './Login';
+import Visit from './Visit';
+import './filters';
 
-const storage = new LocalStorage()
+const storage = new Storage()
 storage.renderCards()
 
+// email: aj@ua.com | password: 121212
 
 document.querySelector('.js-login').addEventListener('click', function(e)  {
 	if (this.classList.contains('is-logged-in')) {

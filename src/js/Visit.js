@@ -1,5 +1,6 @@
 import {token} from './functions'
-import {CardiologistCard, DentistCard, TherapistCard} from "./Card";
+import {CardiologistCard, DentistCard, TherapistCard} from "./Card"
+import Message from "./Message"
 
 export default class Visit {
 	constructor(modal) {
@@ -110,8 +111,8 @@ export default class Visit {
 			e.preventDefault()
 			submitBtn.classList.add('disabled')
 
-			const formData = new FormData(form);
-			console.log(Object.fromEntries(formData));
+			const formData = new FormData(form)
+			console.log(Object.fromEntries(formData))
 
 			fetch("https://ajax.test-danit.com/api/v2/cards", {
 				method: 'POST',
@@ -125,12 +126,13 @@ export default class Visit {
 				.then(response => {
 					console.log(response)
 					this.modal.closeModal()
-					alert("Added visit")
 
-					const cardsValues = Object.values(response);
-					const [doctor, ...rest] = cardsValues;
+					new Message('Added visit', 'success')
 
-					let objDoctor;
+					const cardsValues = Object.values(response)
+					const [doctor, ...rest] = cardsValues
+
+					let objDoctor
 					switch (doctor) {
 						case "cardiologist":
 							objDoctor = new CardiologistCard(...cardsValues);
@@ -177,7 +179,8 @@ export default class Visit {
 				.then(response => {
 					console.log(response)
 					this.modal.closeModal()
-					alert("Updated visit")
+
+					new Message('Updated visit', 'primary')
 
 					const cardsValues = Object.values(response)
 					const [doctor, ...rest] = cardsValues
